@@ -40,21 +40,16 @@ class HangmanGame
 
   def load_pictures
     fp = File.open('hangman.txt')
-    num_stages = fp.readline.to_i
-    stage_height = fp.readline.to_i
-    @stages = {}
-    @num_stages = num_stages
-    (0...num_stages).each do |stage|
-      rows = []
-      (1..stage_height).each do |rnum|
-        rows.push fp.readline
-      end
-      @stages[stage] = rows
-    end
+    # TODO
+    # popatrz w hangman.txt
+    # pierwszy wiersz to ilość wariantów
+    # drugi to ilość wierszy w każdym wariancie
   end
 
   def choose_word
-    @correct_word = @words.sample
+    # TODO
+    # wybierz jedno losowe słowo ze słownika
+    # BONUS: wybierz takie które jeszcze nie zostało w tej sesji użyte
   end
 
   def reset_hangman
@@ -83,7 +78,8 @@ class HangmanGame
   end
 
   def draw_gallows
-    STDOUT.write @stages[@fails].join('')
+    # TODO
+    # narysuj szubienicę według bieżącego stanu gry
   end
 
   def cols
@@ -91,32 +87,35 @@ class HangmanGame
   end
 
   def draw_letters
-    text = "Already guessed: #{@letters.to_a.join('')}"
-    STDOUT.write "#{goto(1, cols - text.size)}#{text}"
+    # TODO
+    # wypisz użyte już litery po prawej stronie w wierszu 1
   end
 
   def draw_guess
     mid = (cols/2).to_i
-    STDOUT.write "#{goto(3, mid)}#{@word}"
+    # TODO
+    # wypisz obecny stan zgadywania na środku wiersza 2
   end
 
   def draw_score
     text = "Score: #{@score}"
-    STDOUT.write "#{goto(2, cols - text.size)}#{text}"
+    # TODO
+    # wypisz punktację po prawej stronie wiersza 2
   end
 
   def prompt
-    STDIN.getch
+    # TODO
+    # pobierz jeden znak z konsoli
   end
 
   def valid?(letter)
-    return false if @letters.include?(letter)
-    return false unless @correct_word.include?(letter)
+    # TODO
+    # kiedy litera jest błędna?
     true
   end
 
   def update(letter)
-    @letters.add letter
+    # TODO: czego brakuje?
     start = -1
     while j = @correct_word.index(letter, start + 1)
       @word[j] = letter
@@ -129,7 +128,7 @@ class HangmanGame
   end
 
   def guessed?
-    @correct_word == @word
+    # TODO: kiedy zgadliśmy słowo?
   end
 
   def hang
