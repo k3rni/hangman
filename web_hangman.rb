@@ -30,7 +30,6 @@ class QueueHangman < HangmanGame
   def draw
     @io = StringIO.new
     super
-    @io.string
   end
 
 end
@@ -51,11 +50,11 @@ class GameServlet < WEBrick::HTTPServlet::AbstractServlet
     sleep 0.1 # daj czas wątkowi żeby się zbudził i pomielił
 
     if dead?
-      # specjalny case, z braku lepszego dostępu :/
+      # minimalne nadużycie semantyki metody output
       text = game.output.string
       tail = "<a href='/'>Restart</a>"
     else
-      text = game.draw
+      text = game.output.string
       tail = form
     end
     response.body = "<pre>#{text}</pre>" + tail
@@ -65,7 +64,7 @@ class GameServlet < WEBrick::HTTPServlet::AbstractServlet
 
   def form
     %Q(<form method="post" action="/">
-    <input type="text" name="letter">
+    <input type="text" name="letter" autofocus>
     <input type="submit">
     </form>)
   end
