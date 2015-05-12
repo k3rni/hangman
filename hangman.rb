@@ -2,8 +2,8 @@ require 'io/console'
 
 class HangmanGame
   def initialize(filename)
-    @words = File.read(filename).split("\n")
     @score = 0
+    load_words(filename)
     load_pictures
   end
 
@@ -20,9 +20,12 @@ class HangmanGame
           running = false
           break
         end
+        # TODO: czy to wyczerpuje wszystkie możliwości przetwarzania litery?
         if valid? letter
+          add letter
           update letter
         else
+          add letter
           hang
         end
         if guessed?
@@ -36,6 +39,10 @@ class HangmanGame
     clear
     puts "The End"
     puts "Final score: #{@score}"
+  end
+
+  def load_words(filename)
+    @words = ['wisielec'] # TODO
   end
 
   def load_pictures
@@ -114,8 +121,11 @@ class HangmanGame
     true
   end
 
+  def add(letter)
+    # TODO
+  end
+
   def update(letter)
-    # TODO: czego brakuje?
     start = -1
     while j = @correct_word.index(letter, start + 1)
       @word[j] = letter
