@@ -21,7 +21,9 @@ class HangmanGame
           running = false
           break
         end
-        if valid? letter
+        if used? letter
+          # nic
+        elsif valid? letter
           add letter
           update letter
         else
@@ -117,8 +119,11 @@ class HangmanGame
     STDIN.getch
   end
 
+  def used?(letter)
+    @letters.include?(letter)
+  end
+
   def valid?(letter)
-    return false if @letters.include?(letter)
     return false unless @correct_word.include?(letter)
     true
   end
