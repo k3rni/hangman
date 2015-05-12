@@ -39,9 +39,9 @@ class HangmanGame
       end
     end
     clear
-    puts "The word was: #{@correct_word}"
-    puts "The End"
-    puts "Final score: #{@score}"
+    output.puts "The word was: #{@correct_word}"
+    output.puts "The End"
+    output.puts "Final score: #{@score}"
   end
 
   def load_words(filename)
@@ -78,7 +78,7 @@ class HangmanGame
   end
 
   def clear
-    STDOUT.write "\e[2J\e[1;1H"
+    output.write "\e[2J\e[1;1H"
   end
   
   def goto(row, col)
@@ -93,7 +93,7 @@ class HangmanGame
   end
 
   def draw_gallows
-    STDOUT.write @stages[@fails].join('')
+    output.write @stages[@fails].join('')
   end
 
   def cols
@@ -102,17 +102,17 @@ class HangmanGame
 
   def draw_letters
     text = "Already guessed: #{@letters.to_a.join('')}"
-    STDOUT.write "#{goto(1, cols - text.size)}#{text}"
+    output.write "#{goto(1, cols - text.size)}#{text}"
   end
 
   def draw_guess
     mid = (cols/2).to_i
-    STDOUT.write "#{goto(3, mid)}#{@word}"
+    output.write "#{goto(3, mid)}#{@word}"
   end
 
   def draw_score
     text = "Score: #{@score}"
-    STDOUT.write "#{goto(2, cols - text.size)}#{text}"
+    output.write "#{goto(2, cols - text.size)}#{text}"
   end
 
   def prompt
@@ -150,6 +150,10 @@ class HangmanGame
 
   def hang
     @fails += 1
+  end
+
+  def output
+    STDOUT
   end
 end
 
