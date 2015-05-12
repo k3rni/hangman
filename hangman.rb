@@ -1,9 +1,10 @@
 require 'io/console'
+require 'set'
 
 class HangmanGame
   def initialize(filename)
-    @words = File.read(filename).split("\n")
     @score = 0
+    load_words(filename)
     load_pictures
   end
 
@@ -21,8 +22,10 @@ class HangmanGame
           break
         end
         if valid? letter
+          add letter
           update letter
         else
+          add letter
           hang
         end
         if guessed?
@@ -34,8 +37,13 @@ class HangmanGame
       end
     end
     clear
+    puts "The word was: #{@correct_word}"
     puts "The End"
     puts "Final score: #{@score}"
+  end
+
+  def load_words(filename)
+    @words = File.read(filename).split("\n")
   end
 
   def load_pictures
@@ -115,8 +123,11 @@ class HangmanGame
     true
   end
 
-  def update(letter)
+  def add(letter)
     @letters.add letter
+  end
+
+  def update(letter)
     start = -1
     while j = @correct_word.index(letter, start + 1)
       @word[j] = letter
