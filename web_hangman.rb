@@ -12,7 +12,7 @@ class QueueHangman < HangmanGame
   end
 
   def prompt
-    @queue.pop
+    # TODO: skąd bierzemy teraz literki?
   end
 
   def goto(row, col)
@@ -38,24 +38,25 @@ Thread.abort_on_exception = true
 class GameServlet < WEBrick::HTTPServlet::AbstractServlet
   def do_GET(request, response)
     text = game.draw
-    response.body = "<pre>#{text}</pre>" + form
+    tail = "" # czego potrzebujemy?
+    response.body = "<pre>#{text}</pre>" + tail
     response.status = 200
   end
 
   def do_POST(request, response)
     params = CGI::parse request.body
-    letter = params['letter'].first
-    queue.push letter
+    # TODO: co robimy z params?
+    # do czego jest queue?
 
     sleep 0.1 # daj czas wątkowi żeby się zbudził i pomielił
 
     if dead?
       # minimalne nadużycie semantyki metody output
       text = game.output.string
-      tail = "<a href='/'>Restart</a>"
+      tail = "" # TODO: czego tu potrzebujemy?
     else
       text = game.output.string
-      tail = form
+      tail = "" # TODO: czego tu potrzebujemy?
     end
     response.body = "<pre>#{text}</pre>" + tail
     response.status = 200
@@ -63,10 +64,7 @@ class GameServlet < WEBrick::HTTPServlet::AbstractServlet
   end
 
   def form
-    %Q(<form method="post" action="/">
-    <input type="text" name="letter" autofocus>
-    <input type="submit">
-    </form>)
+    # TODO: formularz
   end
 
   def game
@@ -82,7 +80,7 @@ class GameServlet < WEBrick::HTTPServlet::AbstractServlet
   end
 
   def restart
-    @server.start_game
+    # TODO
   end
 end
 
