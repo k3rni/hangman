@@ -1,4 +1,5 @@
 require 'io/console'
+require 'set'
 
 class HangmanGame
   def initialize(filename)
